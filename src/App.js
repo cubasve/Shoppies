@@ -1,6 +1,5 @@
-//import logo from './logo.svg';
-import './App.css';
 import { useState } from 'react';
+import './App.css';
 import SearchBar from './components/Search';
 import Nominations from './components/Nominations';
 import Movies from './components/Movies';
@@ -8,10 +7,10 @@ import Movies from './components/Movies';
 export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [movieList, setMovieList] = useState([]);
 
   const SECRET = process.env.REACT_APP_OMDB_API_KEY;
   const movieURL = `https://www.omdbapi.com/?apikey=${SECRET}&s=${searchQuery}`;
-  //https://www.omdbapi.com/?apikey=aa53f240&s=Fight
 
   const handleChange = (e) => {
     //console.log('e.target.name', e.target.name);
@@ -26,7 +25,9 @@ export default function App() {
       setIsLoading(true);
       const response = await fetch(movieURL);
       const data = await response.json();
-      console.log('data: ', data);
+      //console.log('data: ', data);
+      setMovieList(data.Search);
+      //console.log('movieList: ', movieList);
       setIsLoading(false);
     } catch (err) {
       console.error(err);
@@ -40,7 +41,7 @@ export default function App() {
         handleChange={handleChange}
         handleSubmit={handleSubmit}
       />
-      <Movies />
+      <Movies movieList={movieList} />
       <Nominations />
     </div>
   );
