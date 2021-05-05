@@ -1,25 +1,39 @@
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import SearchBar from './components/Search';
+import Nominations from './components/Nominations';
+import Movies from './components/Movies';
 
-function App() {
+export default function App() {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const API = `https://www.omdbapi.com/?apikey=${process.env.OMDB_API_KEY}$s=${searchQuery}`;
+
+  const handleChange = (e) => {
+    console.log('e.target.name', e.target.name);
+    console.log('e.target.value: ', e.target.value)
+    setSearchQuery(e.target.value);
+  }
+
+  const handleSubmit = (e) => {
+    try {
+      fetch(API);
+      console.log(API);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <SearchBar 
+        searchQuery={searchQuery} 
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />
+      <Movies />
+      <Nominations />
     </div>
   );
 }
-
-export default App;
