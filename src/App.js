@@ -3,7 +3,7 @@ import './App.css';
 import SearchBar from './components/Search';
 import Nominations from './components/Nominations';
 import Movies from './components/Movies/Movies';
-//import { Button, Modal } from 'react-bootstrap';
+import { Container, Col, Row, Toast } from 'react-bootstrap';
 
 export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -14,30 +14,45 @@ export default function App() {
   const SECRET = process.env.REACT_APP_OMDB_API_KEY;
   const movieURL = `https://www.omdbapi.com/?apikey=${SECRET}&s=${searchQuery}`;
 
-  const handleSearchQueryChange = (e) => {
+  const handleSearchQueryChange = async (e) => {
     //console.log('e.target.name', e.target.name);
     //console.log('e.target.value: ', e.target.value)
-    setSearchQuery(e.target.value);
-    //console.log('searchQuery: ', searchQuery);
-  }
-
-  const handleSearchQuerySubmit = async (e) => {
     e.preventDefault();
+    setSearchQuery(e.target.value);
     try {
       setIsLoading(true);
       const response = await fetch(movieURL);
       const data = await response.json();
       //console.log('data: ', data);
       setMovieList(data.Search);
-      //console.log('movieList: ', movieList);
-      setIsLoading(false);
     } catch (err) {
       console.error(err);
     }
   }
 
+  // const handleSearchQuerySubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     setIsLoading(true);
+  //     const response = await fetch(movieURL);
+  //     const data = await response.json();
+  //     //console.log('data: ', data);
+  //     setMovieList(data.Search);
+  //     //console.log('movieList: ', movieList);
+  //     setIsLoading(false);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
+
   const handleAddNomination = (movie) => {
     setNominations(nominations => [...nominations, movie]);
+    // <Toast>
+    //   <Toast.Header>{movie.Title}</Toast.Header>
+    //   <Toast.Body>
+    //     {movie.Title} was nominated!
+    //   </Toast.Body>
+    // </Toast>
     console.log('nominations: ', nominations);
   }
 
@@ -47,8 +62,19 @@ export default function App() {
 
     let index = nominationsCopy.findIndex(movie => movie.imdbID === e.target.value)
     //let index = nominationsCopy.indexOf(e.target.value);
-    console.log('index: ', index);
-    //if (index === -1) //toast: Sorry, an error occurred
+    //console.log('index: ', index);
+
+    /* If nominated movie is not found,  */
+    if (index === -1) {
+      return (
+        <Toast>
+          <Toast.Header>Error Occurred</Toast.Header>
+          <Toast.Body>
+            Sorry, an error has occurred. Please try again later.
+          </Toast.Body>
+        </Toast>
+      )
+    }
     nominationsCopy.splice(index , 1);
     setNominations(nominationsCopy);
     console.log('nominations: ', nominations)
@@ -56,20 +82,23 @@ export default function App() {
 
   return (
     <div className="App">
+      <h1>The Shoppies</h1>
       <SearchBar 
         handleSearchQueryChange={handleSearchQueryChange}
-        handleSearchQuerySubmit={handleSearchQuerySubmit}
+        //handleSearchQuerySubmit={handleSearchQuerySubmit}
         searchQuery={searchQuery} 
       />
-      <Movies 
-        handleAddNomination={handleAddNomination}
-        movieList={movieList} 
-        nominations={nominations}
-      />
-      <Nominations 
-        handleDeleteNomination={handleDeleteNomination}
-        nominations={nominations}
-      />
+      <div>
+        <Movies 
+          handleAddNomination={handleAddNomination}
+          movieList={movieList} 
+          nominations={nominations}
+        />
+        <Nominations 
+          handleDeleteNomination={handleDeleteNomination}
+          nominations={nominations}
+        />
+      </div>
     </div>
   );
 }

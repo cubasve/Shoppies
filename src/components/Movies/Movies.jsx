@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Card, Modal } from 'react-bootstrap';
+import { Button, Card, Image, Modal, Table } from 'react-bootstrap';
 import './Movies.css';
 import  MoviePosterBackup from '..//MoviePosterBackup.png';
 
@@ -13,12 +13,80 @@ export default function Movies({
 
     return (
         <div className="movies">
+            {movieList ? 
+                movieList.map(movie => {
+                    return (
+                        <div key={movie.imdbID}>
+                            <Table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            {movie.Poster ? 
+                                                <Image src={movie.Poster}/> : 
+                                                <Image src={MoviePosterBackup}/>
+                                            }
+                                        </td>
+                                        <td>{movie.Title}</td>
+                                        <td>{movie.Year}</td>
+                                        <td>
+                                            {nominations.find(nomination => nomination.imdbID === movie.imdbID) ? ( 
+                                        <Button 
+                                            variant="secondary"
+                                            disabled
+                                        >
+                                            Nominated
+                                        </Button> )
+                                        :
+                                    /* If there are already 5 nominations, show the modal */
+                                        nominations.length === 5 ? (
+                                            <>
+                                                <Button 
+                                                    variant="primary"
+                                                    onClick={handleOpenModal}
+                                                >
+                                                    Nominate
+                                                </Button>
+                                                <Modal 
+                                                    show={showModal}
+                                                    onHide={handleCloseModal}
+                                                    backdrop="static"
+                                                >
+                                                    <Modal.Header closeButton>
+                                                        <Modal.Title>Nominations</Modal.Title>
+                                                    </Modal.Header>
+                                                    <Modal.Body>
+                                                        You can only have 5 nominations. To nominate another movie, please remove one from the list.
+                                                    </Modal.Body>
+                                                    <Modal.Footer>
+                                                        <Button variant="success" onClick={handleCloseModal}>OK</Button>
+                                                    </Modal.Footer>
+                                                </Modal>
+                                            </>
+                                    ) : (
+                                        /* Nominate the movie otherwise */
+                                         <Button 
+                                                variant="primary"
+                                                onClick={() => handleAddNomination(movie)}
+                                            >
+                                                Nominate
+                                            </Button>
+                                    )}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        </div>
+                    )
+                }) :
+                <h4>There are no results</h4>
+            }
+
             {movieList ?
                 movieList.map(movie => {
                     return (
                         <div key={movie.imdbID}>
                             <Card style={{ width: '16rem'}}>
-                                    {/* If there is no image for the movie*/}
+                                    {/* If there is no image for the movie, show the backup picture */}
                                     {movie.Poster ? 
                                     <Card.Img variant="top" src={movie.Poster}/> : 
                                     <Card.Img variant="top" src={MoviePosterBackup}/>
@@ -36,7 +104,7 @@ export default function Movies({
                                             Nominated
                                         </Button> )
                                         :
-                                    /* If there are already 5 nominations */
+                                    /* If there are already 5 nominations, show the modal */
                                         nominations.length === 5 ? (
                                             <>
                                                 <Button 
@@ -48,6 +116,7 @@ export default function Movies({
                                                 <Modal 
                                                     show={showModal}
                                                     onHide={handleCloseModal}
+                                                    backdrop="static"
                                                 >
                                                     <Modal.Header closeButton>
                                                         <Modal.Title>Nominations</Modal.Title>
@@ -61,7 +130,7 @@ export default function Movies({
                                                 </Modal>
                                             </>
                                     ) : (
-                                        /* Nominate the movie */
+                                        /* Nominate the movie otherwise */
                                          <Button 
                                                 variant="primary"
                                                 onClick={() => handleAddNomination(movie)}
@@ -91,7 +160,7 @@ export default function Movies({
                     )
                 })
                 :
-                <h6>There are no results</h6>
+                <h4>There are no results</h4>
             }
             Movies
         </div>

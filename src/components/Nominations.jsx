@@ -1,7 +1,9 @@
 import React from 'react';
 import { Button, Card } from 'react-bootstrap';
 
-export default function Nominations({ handleDeleteNomination, nominations }) {
+export default function Nominations({ 
+    handleDeleteNomination, nominations 
+}) {
     return (
         <>
             {nominations.length ?
@@ -25,7 +27,7 @@ export default function Nominations({ handleDeleteNomination, nominations }) {
                     )
                 })
             :
-            <h6>No Nominations Yet!</h6>
+            <h4>No Nominations Yet!</h4>
             }
         </>
     )
