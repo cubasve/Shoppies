@@ -2,19 +2,16 @@ import React from 'react';
 import { Button, Col, Form } from 'react-bootstrap';
 
 export default function Search({ 
-    handleSearchQueryChange, handleSearchQuerySubmit, searchQuery 
+    handleSearchQueryChange, searchQuery 
 }) {
     return (
-        <Form 
-            inline 
-            //onSubmit={handleSearchQuerySubmit}
-        >
+        <Form inline>
             <Form.Row>
-                <Form.Group as={Col} sm="20">
+                <Form.Group as={Col} sm="40">
                     <Form.Control 
                         type="text"
                         value={searchQuery}
-                        onChange={handleSearchQueryChange}
+                        onChange={(e) => handleSearchQueryChange(e)}
                         placeholder="Nominate a movie!"
                     />
                     {/* <Button type="submit" variant="primary">
