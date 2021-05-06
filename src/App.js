@@ -14,11 +14,6 @@ export default function App() {
   const SECRET = process.env.REACT_APP_OMDB_API_KEY;
   const movieURL = `https://www.omdbapi.com/?apikey=${SECRET}&s=${searchQuery}`;
 
-  // const [showModal, setShowModal] = useState(false);
-
-  // const handleCloseModal = () => setShowModal(false);
-  // const handleOpenModal = () => setShowModal(true);
-
   const handleSearchQueryChange = (e) => {
     //console.log('e.target.name', e.target.name);
     //console.log('e.target.value: ', e.target.value)
@@ -42,25 +37,6 @@ export default function App() {
   }
 
   const handleAddNomination = (movie) => {
-    console.log('Add Nomination here')
-    // If 5 movies have already been nominated 
-    // if (nominations.length === 5) {
-    //   handleOpenModal();
-    //   return(
-    //     <Modal 
-    //       showModal={showModal}
-    //       onHide={handleCloseModal}
-    //   >
-    //       <Modal.Header closeButton>
-    //           <Modal.Title>You can only have 5 nominations</Modal.Title>
-    //           <Modal.Body>Eva</Modal.Body>
-    //           <Modal.Footer>
-    //               <Button variant="secondary" onClick={handleCloseModal}>OK</Button>
-    //           </Modal.Footer>
-    //       </Modal.Header>
-    //   </Modal>
-    //   )
-    // }
     setNominations(nominations => [...nominations, movie]);
     console.log('nominations: ', nominations);
   }

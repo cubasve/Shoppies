@@ -11,24 +11,6 @@ export default function Movies({
     const handleCloseModal = () => setShowModal(false);
     const handleOpenModal = () => setShowModal(true);
 
-    const handleMaximumNominations = () => {
-        handleOpenModal();
-        return (
-            <Modal 
-                showModal={showModal}
-                onHide={handleCloseModal}
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>You can only have 5 nominations</Modal.Title>
-                    <Modal.Body>Eva</Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleCloseModal}>Ok</Button>
-                    </Modal.Footer>
-                </Modal.Header>
-            </Modal>
-        )
-    }
-
     return (
         <div className="movies">
             {movieList ?
@@ -53,8 +35,9 @@ export default function Movies({
                                         >
                                             Nominated
                                         </Button> )
+                                        :
                                     /* If there are already 5 nominations */
-                                    : nominations.length === 5 ? (
+                                        nominations.length === 5 ? (
                                             <>
                                                 <Button 
                                                     variant="primary"
@@ -63,36 +46,44 @@ export default function Movies({
                                                     Nominate
                                                 </Button>
                                                 <Modal 
-                                                    showModal={showModal}
+                                                    show={showModal}
                                                     onHide={handleCloseModal}
                                                 >
                                                     <Modal.Header closeButton>
-                                                        <Modal.Title>You can only have 5 nominations</Modal.Title>
-                                                        <Modal.Body>Eva</Modal.Body>
-                                                        <Modal.Footer>
-                                                            <Button variant="secondary" onClick={handleCloseModal}>OK</Button>
-                                                        </Modal.Footer>
+                                                        <Modal.Title>Nominations</Modal.Title>
                                                     </Modal.Header>
+                                                    <Modal.Body>
+                                                        You can only have 5 nominations. To nominate another movie, please remove one from the list.
+                                                    </Modal.Body>
+                                                    <Modal.Footer>
+                                                        <Button variant="success" onClick={handleCloseModal}>OK</Button>
+                                                    </Modal.Footer>
                                                 </Modal>
                                             </>
                                     ) : (
+                                        /* Nominate the movie */
                                          <Button 
-                                                    variant="primary"
-                                                    onClick={() => handleAddNomination(movie)}
-                                                >
-                                                    Nominate
-                                                </Button>
+                                                variant="primary"
+                                                onClick={() => handleAddNomination(movie)}
+                                            >
+                                                Nominate
+                                            </Button>
                                     )}
-                                            {/* //  <Button 
-                                            //     variant="primary"
-                                            //     onClick={() => {
-                                            //         nominations.length === 5 ? 
-                                            //         handleMaximumNominations() : 
-                                            //         handleAddNomination(movie)
-                                            //     }}
-                                            // >
-                                            //     Nominate
-                                            // </Button> */}
+                                    
+                                        {/* <Button 
+                                    //             variant="primary"
+                                    //             onClick={() => (
+                                    //                 nominations.length === 5 ? (
+                                    //                     handleOpenModal(),
+                                    //                     handleMaximumNominations()
+                                    //                 ) : (
+                                    //                     handleAddNomination(movie)
+                                    //                 )
+                                    //             )}
+                                    //         >
+                                    //             Nominate
+                                    //         </Button> 
+                                    // } */}
 
                                 </Card.Body>
                             </Card>
@@ -100,7 +91,7 @@ export default function Movies({
                     )
                 })
                 :
-                <h3>There are no results</h3>
+                <h6>There are no results</h6>
             }
             Movies
         </div>

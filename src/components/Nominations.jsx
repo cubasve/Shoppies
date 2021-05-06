@@ -25,7 +25,7 @@ export default function Nominations({ handleDeleteNomination, nominations }) {
                     )
                 })
             :
-            <h3>No Nominations Yet!</h3>
+            <h6>No Nominations Yet!</h6>
             }
         </>
     )
