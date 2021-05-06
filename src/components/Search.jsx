@@ -1,18 +1,21 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 
-export default function Search({ handleChange, handleSubmit, searchQuery }) {
+export default function Search({ 
+    handleSearchQueryChange, handleSearchQuerySubmit, searchQuery 
+}) {
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSearchQuerySubmit}>
             SearchBar
             <input 
                 type="text"
                 value={searchQuery}
-                onChange={handleChange}
+                onChange={handleSearchQueryChange}
                 //name="searchQuery"
             />
-            <button type="submit">
+            <Button type="submit" variant="primary">
                 Search
-            </button>
+            </Button>
         </form>
     );
 }

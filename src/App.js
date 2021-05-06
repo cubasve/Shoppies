@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './App.css';
 import SearchBar from './components/Search';
 import Nominations from './components/Nominations';
-import Movies from './components/Movies';
+import Movies from './components/Movies/Movies';
 
 export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -12,14 +12,14 @@ export default function App() {
   const SECRET = process.env.REACT_APP_OMDB_API_KEY;
   const movieURL = `https://www.omdbapi.com/?apikey=${SECRET}&s=${searchQuery}`;
 
-  const handleChange = (e) => {
+  const handleSearchQueryChange = (e) => {
     //console.log('e.target.name', e.target.name);
     console.log('e.target.value: ', e.target.value)
     setSearchQuery(e.target.value);
     console.log('searchQuery: ', searchQuery);
   }
 
-  const handleSubmit = async (e) => {
+  const handleSearchQuerySubmit = async (e) => {
     e.preventDefault();
     try {
       setIsLoading(true);
@@ -38,8 +38,8 @@ export default function App() {
     <div className="App">
       <SearchBar 
         searchQuery={searchQuery} 
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
+        handleSearchQueryChange={handleSearchQueryChange}
+        handleSearchQuerySubmit={handleSearchQuerySubmit}
       />
       <Movies movieList={movieList} />
       <Nominations />
