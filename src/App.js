@@ -3,6 +3,7 @@ import './App.css';
 import SearchBar from './components/Search';
 import Nominations from './components/Nominations';
 import Movies from './components/Movies/Movies';
+//import { Button, Modal } from 'react-bootstrap';
 
 export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -10,10 +11,13 @@ export default function App() {
   const [movieList, setMovieList] = useState([]);
   const [nominations, setNominations] = useState([]);
 
-  const [showModal, setShowModal] = useState(false);
-
   const SECRET = process.env.REACT_APP_OMDB_API_KEY;
   const movieURL = `https://www.omdbapi.com/?apikey=${SECRET}&s=${searchQuery}`;
+
+  // const [showModal, setShowModal] = useState(false);
+
+  // const handleCloseModal = () => setShowModal(false);
+  // const handleOpenModal = () => setShowModal(true);
 
   const handleSearchQueryChange = (e) => {
     //console.log('e.target.name', e.target.name);
@@ -37,21 +41,41 @@ export default function App() {
     }
   }
 
-  const handleModalClose = () => setShowModal(false);
-  const handleModalOpen = () => setShowModal(true);
-
   const handleAddNomination = (movie) => {
     console.log('Add Nomination here')
-    // If there are more than 5 nominations (maximum number)
-    if (nominations.length === 5) {
-      alert('You can only have 5 nominations')
-    }
+    // If 5 movies have already been nominated 
+    // if (nominations.length === 5) {
+    //   handleOpenModal();
+    //   return(
+    //     <Modal 
+    //       showModal={showModal}
+    //       onHide={handleCloseModal}
+    //   >
+    //       <Modal.Header closeButton>
+    //           <Modal.Title>You can only have 5 nominations</Modal.Title>
+    //           <Modal.Body>Eva</Modal.Body>
+    //           <Modal.Footer>
+    //               <Button variant="secondary" onClick={handleCloseModal}>OK</Button>
+    //           </Modal.Footer>
+    //       </Modal.Header>
+    //   </Modal>
+    //   )
+    // }
     setNominations(nominations => [...nominations, movie]);
     console.log('nominations: ', nominations);
   }
 
-  const handleDeleteNomination = () => {
+  const handleDeleteNomination = (e) => {
+    console.log('e.target.value', e.target.value)
+    const nominationsCopy = [...nominations];
 
+    let index = nominationsCopy.findIndex(movie => movie.imdbID === e.target.value)
+    //let index = nominationsCopy.indexOf(e.target.value);
+    console.log('index: ', index);
+    //if (index === -1) //toast: Sorry, an error occurred
+    nominationsCopy.splice(index , 1);
+    setNominations(nominationsCopy);
+    console.log('nominations: ', nominations)
   }
 
   return (

@@ -14,7 +14,8 @@ export default function Nominations({ handleDeleteNomination, nominations }) {
                                     <Card.Text>{nomination.Year}</Card.Text>
                                     <Button
                                         variant="danger"
-                                        //onClick={handleDeleteNomination}
+                                        onClick={handleDeleteNomination}
+                                        value={nomination.imdbID}
                                     >
                                         Remove
                                     </Button>
