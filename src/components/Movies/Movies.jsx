@@ -3,8 +3,12 @@ import { Button, Card } from 'react-bootstrap';
 import './Movies.css';
 import  MoviePosterBackup from '..//MoviePosterBackup.png';
 
-export default function Movies({ movieList }) {
-    console.log('movieList: ', movieList);
+export default function Movies({ 
+    handleAddNomination, movieList, nominations 
+}) {
+    //console.log('movieList: ', movieList);
+    console.log('nominations: ', nominations)
+
     return (
         <div className="movies">
             {movieList ?
@@ -20,7 +24,29 @@ export default function Movies({ movieList }) {
                                 <Card.Body>
                                     <Card.Title>{movie.Title}</Card.Title>
                                     <Card.Text>{movie.Year}</Card.Text>
-                                    <Button variant="primary">Nominate</Button>
+                                    {/* If the movie is already nominated, disable the button */}
+                                    {nominations[movie.imdbID] ?
+                                        <Button 
+                                            variant="secondary"
+                                            disabled
+                                        >
+                                            Nominated
+                                        </Button>
+                                    :
+                                        <Button 
+                                            variant="primary"
+                                            onClick={() => handleAddNomination(movie)}
+                                            //disabled
+                                        >
+                                            Nominate
+                                        </Button>
+                                    }
+                                    {/* <Button 
+                                        variant="primary"
+                                        onClick={() => handleAddNomination(movie)}
+                                    >
+                                        Nominate
+                                    </Button> */}
                                 </Card.Body>
                             </Card>
                         </div>
