@@ -8,7 +8,7 @@ export default function Search({
     return (
         <Form onSubmit={handleSearchQuerySubmit}>
             <Row className="justify-content-md-center">
-                <Col sm={6}>
+                <Col xs={12} md={6}>
                     <Form.Control 
                         type="text"
                         value={searchQuery}

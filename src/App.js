@@ -10,6 +10,7 @@ export default function App() {
   //const [isLoading, setIsLoading] = useState(false);
   const [movieList, setMovieList] = useState([]);
   const [nominations, setNominations] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const SECRET = process.env.REACT_APP_OMDB_API_KEY;
   const movieURL = `https://www.omdbapi.com/?apikey=${SECRET}&s=${searchQuery}`;
@@ -19,22 +20,30 @@ export default function App() {
         try {
           const response = await fetch(movieURL);
           const data = await response.json();
+          console.log('data: ', data);
           console.log('searchQuery in useEffect: ', searchQuery);
           if (Array.isArray(data.Search)) {
             //Only movies appear in the search results
             let onlyMovieResults = data.Search.filter(result => result.Type === 'movie');
             setMovieList(onlyMovieResults);
             console.log('onlyMovieResults: ', onlyMovieResults);
+          } else {
+            if (data.Error !== "Incorrect IMDb ID.") {
+              setErrorMessage(data.Error);
+              console.log('data.Error: ', data.Error)
+            }
           }
           console.log('movieList: ', movieList);
         } catch (err) {
           console.error(err);
         }
       })();
-  }, [searchQuery]);
+  }, [searchQuery, movieList, movieURL]);
 
   const handleSearchQueryChange = async (e) => {
     e.preventDefault();
+    setMovieList([]);
+    console.log('movieList: ', movieList);
     setSearchQuery(e.target.value);
     console.log('searchQuery in handleSearch: ', searchQuery);
     console.log('e.target.value: ', e.target.value);
@@ -93,6 +102,7 @@ export default function App() {
       />
       <div className="shoppies">
         <Movies 
+          errorMessage={errorMessage}
           handleAddNomination={handleAddNomination}
           movieList={movieList} 
           nominations={nominations}

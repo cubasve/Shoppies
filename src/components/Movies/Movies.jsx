@@ -3,7 +3,7 @@ import { Button, Card, Modal } from 'react-bootstrap';
 import './Movies.css';
 
 export default function Movies({ 
-    handleAddNomination, movieList, nominations, searchQuery
+    errorMessage, handleAddNomination, movieList, nominations, searchQuery
 }) {
     const [showModal, setShowModal] = useState(false);
 
@@ -14,11 +14,11 @@ export default function Movies({
         <div className="movies">
             <h4 className="movie-banner">Movie Search Results</h4>
             <div className="movielist">
-                {movieList ?
+                {movieList && movieList.length ?
                     movieList.map(movie => {
                         return (
                             <div key={movie.imdbID}>
-                                <Card style={{ width: "14rem"}} className="text-center">
+                                <Card style={{ width: "14rem"}} border="dark" className="text-center">
                                         {/* If there is no image for the movie, show the backup picture */}
                                         {movie.Poster !== "N/A" ? 
                                         <Card.Img variant="top" src={movie.Poster}/> : 
@@ -77,7 +77,7 @@ export default function Movies({
                         )
                     })
                     :
-                    <h5>There are no results</h5>
+                    <h5>{errorMessage}</h5>
                 }
             </div>
         </div>

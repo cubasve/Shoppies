@@ -13,7 +13,7 @@ export default function Nominations({
                     nominations.map(nomination => {
                         return (
                             <div key={nomination.imdbID}>
-                                <Card style={{ width: '14rem' }} className="text-center">
+                                <Card style={{ width: '14rem' }} border="dark" className="text-center">
                                     {/* If there is no image for the movie, show the backup picture */}
                                     {nomination.Poster !== "N/A" ? 
                                         <Card.Img variant="top" src={nomination.Poster}/> : 
