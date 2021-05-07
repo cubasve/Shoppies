@@ -21,19 +21,24 @@ export default function App() {
           const response = await fetch(movieURL);
           const data = await response.json();
           console.log('data: ', data);
-          console.log('searchQuery in useEffect: ', searchQuery);
+          //console.log('searchQuery in useEffect: ', searchQuery);
+
           if (Array.isArray(data.Search)) {
             //Only movies appear in the search results
-            let onlyMovieResults = data.Search.filter(result => result.Type === 'movie');
-            setMovieList(onlyMovieResults);
-            console.log('onlyMovieResults: ', onlyMovieResults);
+            let onlyMovies = data.Search.filter(result => result.Type === 'movie');
+            console.log('onlyMovies: ', onlyMovies);
+            //Movies with unique imdbID will be shown (duplicates are filtered out)
+            let noDuplicateMovies = onlyMovies.filter((id,index, onlyMovies)=>onlyMovies.findIndex(movie=>(movie.imdbID === id.imdbID))===index)
+            console.log('noDuplicateMovies: ', noDuplicateMovies);
+            setMovieList(noDuplicateMovies);
+            console.log('finalMovieResults: ', noDuplicateMovies);
           } else {
             if (data.Error !== "Incorrect IMDb ID.") {
               setErrorMessage(data.Error);
               console.log('data.Error: ', data.Error)
             }
+            console.log('movieList: ', movieList);
           }
-          console.log('movieList: ', movieList);
         } catch (err) {
           console.error(err);
         }
@@ -43,10 +48,10 @@ export default function App() {
   const handleSearchQueryChange = async (e) => {
     e.preventDefault();
     setMovieList([]);
-    console.log('movieList: ', movieList);
+    //console.log('movieList: ', movieList);
     setSearchQuery(e.target.value);
-    console.log('searchQuery in handleSearch: ', searchQuery);
-    console.log('e.target.value: ', e.target.value);
+    //console.log('searchQuery in handleSearch: ', searchQuery);
+    //console.log('e.target.value: ', e.target.value);
   }
 
   const handleSearchQuerySubmit = async (e) => {
@@ -62,17 +67,17 @@ export default function App() {
 
   const handleAddNomination = (movie) => {
     setNominations(nominations => [...nominations, movie]);
-    // <Toast>
-    //   <Toast.Header>{movie.Title}</Toast.Header>
-    //   <Toast.Body>
-    //     {movie.Title} was nominated!
-    //   </Toast.Body>
-    // </Toast>
-    console.log('nominations: ', nominations);
+    //console.log('nominations: ', nominations);
+      // <Toast>
+      //   <Toast.Header>{movie.Title}</Toast.Header>
+      //   <Toast.Body>
+      //     {movie.Title} was nominated!
+      //   </Toast.Body>
+      // </Toast>
   }
 
   const handleDeleteNomination = (e) => {
-    console.log('e.target.value', e.target.value)
+    //console.log('e.target.value', e.target.value)
     const nominationsCopy = [...nominations];
     let index = nominationsCopy.findIndex(movie => movie.imdbID === e.target.value)
 
@@ -89,7 +94,7 @@ export default function App() {
     }
     nominationsCopy.splice(index , 1);
     setNominations(nominationsCopy);
-    console.log('nominations: ', nominations)
+    //console.log('nominations: ', nominations)
   }
 
   return (
