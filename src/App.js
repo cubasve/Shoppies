@@ -1,7 +1,7 @@
-import { useEffect, useSetState, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
-import SearchBar from './components/Search';
-import Nominations from './components/Nominations';
+import SearchBar from './components/Search/Search';
+import Nominations from './components/Nominations/Nominations';
 import Movies from './components/Movies/Movies';
 import { Toast } from 'react-bootstrap';
 
@@ -18,11 +18,13 @@ export default function App() {
     (async () => {
         try {
           const response = await fetch(movieURL);
-          console.log('searchQuery in useEffect: ', searchQuery);
           const data = await response.json();
-
+          console.log('searchQuery in useEffect: ', searchQuery);
           if (Array.isArray(data.Search)) {
-            setMovieList(data.Search)
+            //Only movies appear in the search results
+            let onlyMovieResults = data.Search.filter(result => result.Type === 'movie');
+            setMovieList(onlyMovieResults);
+            console.log('onlyMovieResults: ', onlyMovieResults);
           }
           console.log('movieList: ', movieList);
         } catch (err) {
@@ -32,27 +34,22 @@ export default function App() {
   }, [searchQuery]);
 
   const handleSearchQueryChange = async (e) => {
-    //console.log('e.target.name', e.target.name);
     e.preventDefault();
     setSearchQuery(e.target.value);
     console.log('searchQuery in handleSearch: ', searchQuery);
     console.log('e.target.value: ', e.target.value);
   }
 
-  // const handleSearchQuerySubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     setIsLoading(true);
-  //     const response = await fetch(movieURL);
-  //     const data = await response.json();
-  //     //console.log('data: ', data);
-  //     setMovieList(data.Search);
-  //     //console.log('movieList: ', movieList);
-  //     setIsLoading(false);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }
+  const handleSearchQuerySubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(movieURL);
+      const data = await response.json();
+      setMovieList(data.Search);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   const handleAddNomination = (movie) => {
     setNominations(nominations => [...nominations, movie]);
@@ -91,13 +88,15 @@ export default function App() {
       <h1>The Shoppies</h1>
       <SearchBar 
         handleSearchQueryChange={handleSearchQueryChange}
+        handleSearchQuerySubmit={handleSearchQuerySubmit}
         searchQuery={searchQuery} 
       />
-      <div>
+      <div className="shoppies">
         <Movies 
           handleAddNomination={handleAddNomination}
           movieList={movieList} 
           nominations={nominations}
+          searchQuery={searchQuery}
         />
         <Nominations 
           handleDeleteNomination={handleDeleteNomination}

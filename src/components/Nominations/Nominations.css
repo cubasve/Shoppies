@@ -1,0 +1,11 @@
+.nominationlist {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: 0px;
+    justify-items: center;
+}
+
+.nominations {
+    background-color: #9fa7ca;
+}
