@@ -1,11 +1,3 @@
-.nominationlist {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto;
-    gap: 10px;
-    justify-items: center;
-}
-
 .nominations {
     text-align: center;
 }
@@ -17,4 +9,53 @@
     padding: 20px 0px;
     margin: 10px 30px;
     background-color:#9fa7ca;
+}
+
+@media only screen and (min-width: 1145px) {
+    .nominationlist {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        gap: 10px;
+        justify-items: center;
+    }
+}
+
+@media only screen and (min-width: 770px) and (max-width: 1144px) {
+    .nominationlist {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto;
+        gap: 10px;
+        justify-items: center;
+    }
+    .nomination-banner {
+        margin-top: 20px;
+    }
+}
+
+@media only screen and (min-width: 520px) and (max-width: 769px) {
+    .nominationlist {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        gap: 10px;
+        justify-items: center;
+    }
+    .nomination-banner {
+        margin-top: 20px;
+    }
+}
+
+@media only screen and (max-width: 519px) {
+    .nominationlist {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: auto;
+        gap: 10px;
+        justify-items: center;
+    }
+    .nomination-banner {
+        margin-top: 20px;
+    }
 }

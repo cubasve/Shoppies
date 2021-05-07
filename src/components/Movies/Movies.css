@@ -1,18 +1,4 @@
-.movielist {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto;
-    gap: 10px;
-    justify-items: center;
-}
-
-/* .movies {
-    border-right-style: dotted;
-    border-color: grey;
-    border-width: 5px;
-} */
-
-.movie-search-title {
+.movie-banner {
     padding-bottom: 20px;
     border: 2px solid black;
     border-radius: 10px;
@@ -37,7 +23,7 @@
     }
 }
 
-@media only screen and (min-width: 1000px) and (max-width: 1245px) {
+@media only screen and (min-width: 1145px) and (max-width: 1245px) {
     .movielist {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -53,7 +39,7 @@
     }
 }
 
-@media only screen and (min-width: 770px) and (max-width: 999px) {
+@media only screen and (min-width: 770px) and (max-width: 1144px) {
     .movielist {
         display: grid;
         grid-template-columns: repeat(3, 1fr);

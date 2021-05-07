@@ -1,7 +1,6 @@
-.App {
+/* .App {
   text-align: center;
-  /* background-color: #9fb8ca; */
-}
+} */
 
 @media only screen and (min-width: 1246px) {
   .shoppies {
@@ -10,16 +9,9 @@
   }
 }
 
-@media only screen and (min-width: 1060px) and (max-width: 1245px) {
+@media only screen and (min-width: 1145px) and (max-width: 1245px) {
   .shoppies {
     display: grid;
     grid-template-columns: 50% 50%;
-  }
-}
-
-@media only screen and (min-width: 700px) and (max-width: 1059px) {
-  .shoppies {
-    /* display: grid;
-    grid-template-columns: 50% 50%; */
   }
 }

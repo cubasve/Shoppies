@@ -12,7 +12,7 @@ export default function Movies({
 
     return (
         <div className="movies">
-            <h4 className="movie-search-title">Movie Search Results</h4>
+            <h4 className="movie-banner">Movie Search Results</h4>
             <div className="movielist">
                 {movieList ?
                     movieList.map(movie => {
