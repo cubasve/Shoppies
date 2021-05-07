@@ -2,10 +2,104 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto;
-    gap: 5px;
+    gap: 10px;
     justify-items: center;
 }
 
-.movies {
+/* .movies {
+    border-right-style: dotted;
+    border-color: grey;
+    border-width: 5px;
+} */
+
+.movie-search-title {
+    padding-bottom: 20px;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 20px 0px;
+    margin: 10px 30px;
     background-color: #9fb8ca;
+}
+
+@media only screen and (min-width: 1246px) {
+    .movielist {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto;
+        gap: 10px;
+        justify-items: center;
+    }
+    
+    .movies {
+        border-right-style: dotted;
+        border-color: grey;
+        border-width: 5px;
+    }
+}
+
+@media only screen and (min-width: 1000px) and (max-width: 1245px) {
+    .movielist {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        gap: 10px;
+        justify-items: center;
+    }
+    
+    .movies {
+        border-right-style: dotted;
+        border-color: grey;
+        border-width: 5px;
+    }
+}
+
+@media only screen and (min-width: 770px) and (max-width: 999px) {
+    .movielist {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto;
+        gap: 10px;
+        justify-items: center;
+    }
+    
+    .movies {
+        padding-bottom: 20px;
+        border-bottom-style: dotted;
+        border-color: grey;
+        border-width: 5px;
+    }
+}
+
+@media only screen and (min-width: 520px) and (max-width: 769px) {
+    .movielist {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        gap: 10px;
+        justify-items: center;
+    }
+    
+    .movies {
+        padding-bottom: 20px;
+        border-bottom-style: dotted;
+        border-color: grey;
+        border-width: 5px;
+    }
+}
+
+@media only screen and (max-width: 519px) {
+    .movielist {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: auto;
+        gap: 10px;
+        justify-items: center;
+    }
+    
+    .movies {
+        padding-bottom: 20px;
+        border-bottom-style: dotted;
+        border-color: grey;
+        border-width: 5px;
+    }
 }

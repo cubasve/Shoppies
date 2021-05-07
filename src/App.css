@@ -1,9 +1,25 @@
-.shoppies {
-  display: grid;
-  grid-template-columns: 60% 40%;
-  
-}
-
 .App {
   text-align: center;
+  /* background-color: #9fb8ca; */
+}
+
+@media only screen and (min-width: 1246px) {
+  .shoppies {
+    display: grid;
+    grid-template-columns: 60% 40%;
+  }
+}
+
+@media only screen and (min-width: 1060px) and (max-width: 1245px) {
+  .shoppies {
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+}
+
+@media only screen and (min-width: 700px) and (max-width: 1059px) {
+  .shoppies {
+    /* display: grid;
+    grid-template-columns: 50% 50%; */
+  }
 }

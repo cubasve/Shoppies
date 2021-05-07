@@ -2,10 +2,19 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
-    gap: 0px;
+    gap: 10px;
     justify-items: center;
 }
 
 .nominations {
-    background-color: #9fa7ca;
+    text-align: center;
+}
+
+.nomination-banner {
+    padding-bottom: 20px;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 20px 0px;
+    margin: 10px 30px;
+    background-color:#9fa7ca;
 }

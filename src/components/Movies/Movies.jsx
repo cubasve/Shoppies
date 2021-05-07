@@ -12,7 +12,7 @@ export default function Movies({
 
     return (
         <div className="movies">
-            <h4>Movie Search Results</h4>
+            <h4 className="movie-search-title">Movie Search Results</h4>
             <div className="movielist">
                 {movieList ?
                     movieList.map(movie => {
@@ -77,7 +77,7 @@ export default function Movies({
                         )
                     })
                     :
-                    <h6>There are no results</h6>
+                    <h5>There are no results</h5>
                 }
             </div>
         </div>

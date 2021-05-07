@@ -7,7 +7,7 @@ export default function Nominations({
 }) {
     return (
         <div className="nominations">
-            <h4>Nominations</h4>
+            <h4 className="nomination-banner">Nominations</h4>
             <div className="nominationlist">
                 {nominations.length ?
                     nominations.map(nomination => {
@@ -35,7 +35,7 @@ export default function Nominations({
                         )
                     })
                 :
-                <h4>No Nominations Yet!</h4>
+                <h5>No Nominations Yet!</h5>
                 }
             </div>
         </div>
