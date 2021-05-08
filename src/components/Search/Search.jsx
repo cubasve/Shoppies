@@ -1,6 +1,6 @@
 import React from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
-import './Search.css';
+//import './Search.css';
 
 export default function Search({ 
     handleSearchQueryChange, handleSearchQuerySubmit, searchQuery 
@@ -20,9 +20,6 @@ export default function Search({
                     </Form.Text>
                 </Col>
             </Row>
-            {/* <Button type="submit" variant="primary">
-                Search
-            </Button> */}
         </Form>
     );
 }

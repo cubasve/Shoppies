@@ -3,7 +3,7 @@ import { Button, Card, Modal } from 'react-bootstrap';
 import './Movies.css';
 
 export default function Movies({ 
-    errorMessage, handleAddNomination, movieList, nominations, searchQuery
+    errorMessage, handleAddNomination, movieList, nominations
 }) {
     const [showModal, setShowModal] = useState(false);
 
