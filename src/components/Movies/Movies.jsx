@@ -29,7 +29,7 @@ export default function Movies({
                                         <Card.Text>{movie.Year}</Card.Text>
 
                                         {/* If the movie is already nominated, disable the button */}
-                                        {nominations.find(nomination => nomination.imdbID === movie.imdbID) ? ( 
+                                        {Array.isArray(nominations) && nominations.find(nomination => nomination.imdbID === movie.imdbID) ? ( 
                                             <Button 
                                                 variant="secondary"
                                                 disabled
@@ -38,7 +38,7 @@ export default function Movies({
                                             </Button> )
                                             :
                                         /* If there are already 5 nominations, show the modal */
-                                            nominations.length === 5 ? (
+                                            Array.isArray(nominations) && nominations.length === 5 ? (
                                                 <>
                                                     <Button 
                                                         variant="primary"

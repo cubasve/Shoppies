@@ -14,6 +14,12 @@ export default function App() {
   const movieURL = `https://www.omdbapi.com/?apikey=${SECRET}&s=${searchQuery}`;
 
   useEffect(() => {
+    //JSON.parse(): converts items in local storage from a string to an object
+    const getNominationsFromStorage = JSON.parse(localStorage.getItem('savedNominations'));
+    setNominations(getNominationsFromStorage);
+  }, [nominations]);
+
+  useEffect(() => {
     (async () => {
         try {
           const response = await fetch(movieURL);
@@ -57,14 +63,23 @@ export default function App() {
 
   const handleAddNomination = (movie) => {
     setNominations(nominations => [...nominations, movie]);
+
+    //JSON.stringify(): converts a JS object/value to a string
+    localStorage.setItem('savedNominations', JSON.stringify([...nominations]));
   }
 
   const handleDeleteNomination = (e) => {
     const nominationsCopy = [...nominations];
-    let index = nominationsCopy.findIndex(movie => movie.imdbID === e.target.value)
+    let index = nominationsCopy.findIndex(movie => movie.imdbID === e.target.value);
 
-    nominationsCopy.splice(index , 1);
-    setNominations(nominationsCopy);
+    if (index !== -1) {
+      nominationsCopy.splice(index , 1);
+      setNominations(nominationsCopy);
+
+      // localStorage.clear();
+      // localStorage.setItem('savedNominations', JSON.stringify([nominations]));
+      // console.log(localStorage)
+    }
   }
 
   return (
