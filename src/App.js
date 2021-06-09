@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import './App.css';
 import SearchBar from './components/Search/Search';
 import Nominations from './components/Nominations/Nominations';
@@ -6,18 +6,26 @@ import Movies from './components/Movies/Movies';
 
 export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [movieList, setMovieList] = useState([]);
-  const [nominations, setNominations] = useState([]);
+  const [movieList, setMovieList] = useState([ ]);
+  const [nominations, setNominations] = useState([ ]);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   const SECRET = process.env.REACT_APP_OMDB_API_KEY;
   const movieURL = `https://www.omdbapi.com/?apikey=${SECRET}&s=${searchQuery}`;
 
-  useEffect(() => {
+  const fetchNominationsFromStorage = useCallback(() => {
     //JSON.parse(): converts items in local storage from a string to an object
-    const getNominationsFromStorage = JSON.parse(localStorage.getItem('savedNominations'));
-    setNominations(getNominationsFromStorage);
-  }, [nominations]);
+    const nominationsFromStorage = JSON.parse(localStorage.getItem('savedNominations') || '[]');
+    setNominations(nominationsFromStorage);
+  }, [nominations, setNominations]);
+
+  useEffect(() => {
+    if (isLoading) {
+      fetchNominationsFromStorage();
+      setIsLoading(false);
+    }
+  }, [fetchNominationsFromStorage, isLoading]);
 
   useEffect(() => {
     (async () => {
@@ -62,10 +70,14 @@ export default function App() {
   }
 
   const handleAddNomination = (movie) => {
+    console.log('movie: ', movie);
+    console.log('nominations: ', nominations);
     setNominations(nominations => [...nominations, movie]);
 
     //JSON.stringify(): converts a JS object/value to a string
     localStorage.setItem('savedNominations', JSON.stringify([...nominations]));
+    console.log('localStorage: ', localStorage.getItem('savedNominations'));
+    console.log('nominations after adding to LocalS: ', nominations)
   }
 
   const handleDeleteNomination = (e) => {
@@ -75,6 +87,12 @@ export default function App() {
     if (index !== -1) {
       nominationsCopy.splice(index , 1);
       setNominations(nominationsCopy);
+      console.log('delete nominations Copy: ', nominationsCopy);
+
+      localStorage.setItem('savedNominations', JSON.stringify([nominationsCopy]));
+      console.log('localStorage: ', localStorage.getItem('savedNominations'));
+      console.log('localS delete nomination: ', nominations);
+      //localStorage.setItem('savedNominations', JSON.stringify([...nominationsCopy]));
 
       // localStorage.clear();
       // localStorage.setItem('savedNominations', JSON.stringify([nominations]));

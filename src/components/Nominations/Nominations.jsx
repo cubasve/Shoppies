@@ -9,7 +9,7 @@ export default function Nominations({
         <div className="nominations">
             <h4 className="nomination-banner">Nominations</h4>
             <div className="nominationlist">
-                {Array.isArray(nominations) ?
+                {Array.isArray(nominations) && nominations.length ?
                     nominations.map(nomination => {
                         return (
                             <div key={nomination.imdbID}>
