@@ -54,6 +54,8 @@ export default function App() {
 
   const handleSearchQueryChange = async (e) => {
     e.preventDefault();
+    console.log('target.value: ', e.target.value);
+    console.log(typeof e.target.value)
     setMovieList([]);
     setSearchQuery(e.target.value);
   }
@@ -101,7 +103,7 @@ export default function App() {
   }
 
   return (
-    <div className="App">
+    <div className='App' data-testid='app'>
       <h1>The Shoppies</h1>
       <SearchBar 
         handleSearchQueryChange={handleSearchQueryChange}
