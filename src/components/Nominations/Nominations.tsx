@@ -1,4 +1,5 @@
 import React from "react";
+import type { FC } from "react";
 import { Button, Card } from "react-bootstrap";
 import "./Nominations.css";
 
@@ -13,7 +14,7 @@ interface NominationProps {
 	}[];
 }
 
-const Nominations: React.FC<NominationProps> = ({
+const Nominations: FC<NominationProps> = ({
 	handleDeleteNomination,
 	nominations,
 }): JSX.Element => (
