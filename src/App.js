@@ -23,11 +23,11 @@ export default function App() {
 	}, [setNominations]);
 
 	useEffect(() => {
-		// if (isLoading) {
-		fetchNominationsFromStorage();
-		// 	setIsLoading(false);
-		// }
-	}, [fetchNominationsFromStorage /*isLoading*/]);
+		if (isLoading) {
+			fetchNominationsFromStorage();
+			setIsLoading(false);
+		}
+	}, [fetchNominationsFromStorage, isLoading]);
 
 	useEffect(() => {
 		(async () => {
@@ -120,6 +120,7 @@ export default function App() {
 					data-testid="movies"
 					errorMessage={errorMessage}
 					handleAddNomination={handleAddNomination}
+					isLoading={isLoading}
 					movieList={movieList}
 					nominations={nominations}
 				/>
