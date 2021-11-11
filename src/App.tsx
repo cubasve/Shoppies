@@ -1,15 +1,16 @@
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import SearchBar from "./components/Search/Search";
 import Nominations from "./components/Nominations/Nominations";
 import Movies from "./components/Movies/Movies";
+import type { Movie } from "./models/movie";
 
 export default function App() {
-	const [searchQuery, setSearchQuery] = useState("");
-	const [movieList, setMovieList] = useState([]);
-	const [nominations, setNominations] = useState([]);
-	const [errorMessage, setErrorMessage] = useState("");
-	const [isLoading, setIsLoading] = useState(true);
+	const [searchQuery, setSearchQuery] = useState<string>("");
+	const [movieList, setMovieList] = useState<Movie[] | []>([]);
+	const [nominations, setNominations] = useState<Movie[] | []>([]);
+	const [errorMessage, setErrorMessage] = useState<string>("");
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	const SECRET = process.env.REACT_APP_OMDB_API_KEY;
 	const movieURL = `https://www.omdbapi.com/?apikey=${SECRET}&s=${searchQuery}`;
@@ -37,18 +38,10 @@ export default function App() {
 
 				if (Array.isArray(data.Search)) {
 					//Only movies appear in the search results
-					let onlyMovies = data.Search.filter(
-						(result) => result.Type === "movie"
+					let onlyMovies: Movie[] = data.Search.filter(
+						(result: Movie) => result.Type === "movie"
 					);
-
-					//Movies with unique imdbID will be shown (duplicates are filtered out)
-					let noDuplicateMovies = onlyMovies.filter(
-						(id, index, onlyMovies) =>
-							onlyMovies.findIndex((movie) => movie.imdbID === id.imdbID) ===
-							index
-					);
-
-					setMovieList(noDuplicateMovies);
+					setMovieList(onlyMovies);
 				} else {
 					if (data.Error !== "Incorrect IMDb ID.") {
 						setErrorMessage(data.Error);
@@ -60,7 +53,9 @@ export default function App() {
 		})();
 	}, [searchQuery, movieList, movieURL]);
 
-	const handleSearchQueryChange = async (e) => {
+	const handleSearchQueryChange = async (
+		e: React.ChangeEvent<HTMLInputElement>
+	): Promise<void> => {
 		e.preventDefault();
 		console.log("target.value: ", e.target.value);
 		console.log(typeof e.target.value);
@@ -68,7 +63,9 @@ export default function App() {
 		setSearchQuery(e.target.value);
 	};
 
-	const handleSearchQuerySubmit = async (e) => {
+	const handleSearchQuerySubmit = async (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
 		e.preventDefault();
 		try {
 			const response = await fetch(movieURL);
@@ -79,17 +76,17 @@ export default function App() {
 		}
 	};
 
-	const handleAddNomination = (movie) => {
+	const handleAddNomination = (movie: Movie) => {
 		const newNominations = [...nominations, movie];
 		setNominations((nominations) => [...nominations, movie]);
 		//JSON.stringify(): converts a JS object/value to a string
 		localStorage.setItem("savedNominations", JSON.stringify(newNominations));
 	};
 
-	const handleDeleteNomination = (e) => {
-		const nominationsCopy = [...nominations];
+	const handleDeleteNomination = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const nominationsCopy: Movie[] = [...nominations];
 		let index = nominationsCopy.findIndex(
-			(movie) => movie.imdbID === e.target.value
+			(movie: Movie) => movie.imdbID === e.target.value
 		);
 		if (index !== -1) {
 			nominationsCopy.splice(index, 1);
@@ -110,14 +107,12 @@ export default function App() {
 		<div className="App" data-testid="app">
 			<h1>The Shoppies</h1>
 			<SearchBar
-				data-testid="search"
 				handleSearchQueryChange={handleSearchQueryChange}
 				handleSearchQuerySubmit={handleSearchQuerySubmit}
 				searchQuery={searchQuery}
 			/>
 			<div className="shoppies">
 				<Movies
-					data-testid="movies"
 					errorMessage={errorMessage}
 					handleAddNomination={handleAddNomination}
 					isLoading={isLoading}
@@ -125,7 +120,6 @@ export default function App() {
 					nominations={nominations}
 				/>
 				<Nominations
-					data-testid="nominations"
 					handleDeleteNomination={handleDeleteNomination}
 					nominations={nominations}
 				/>

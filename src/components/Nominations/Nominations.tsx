@@ -2,22 +2,17 @@ import React from "react";
 import type { FC } from "react";
 import { Button, Card } from "react-bootstrap";
 import "./Nominations.css";
+import type { Movie } from "../../models/movie";
 
 interface NominationProps {
-	handleDeleteNomination: () => void;
-	nominations: {
-		Poster: string;
-		Title: string;
-		Type: string;
-		Year: string;
-		imdbID: string;
-	}[];
+	handleDeleteNomination: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	nominations: Movie[];
 }
 
 const Nominations: FC<NominationProps> = ({
 	handleDeleteNomination,
 	nominations,
-}): JSX.Element => (
+}) => (
 	<div className="nominations">
 		<h4 className="nomination-banner">Nominations</h4>
 		<div className="nominationlist">
@@ -45,7 +40,7 @@ const Nominations: FC<NominationProps> = ({
 									<Card.Text>{nomination.Year}</Card.Text>
 									<Button
 										variant="danger"
-										onClick={handleDeleteNomination}
+										onClick={() => handleDeleteNomination}
 										value={nomination.imdbID}
 									>
 										Remove

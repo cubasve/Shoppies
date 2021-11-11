@@ -15,7 +15,7 @@ export default function Movies({
 	const handleOpenModal = () => setShowModal(true);
 
 	return (
-		<div className="movies" data-testid="movies">
+		<div className="movies">
 			<h4 className="movie-banner">Movie Search Results</h4>
 			<div className="movielist">
 				{isLoading ? (

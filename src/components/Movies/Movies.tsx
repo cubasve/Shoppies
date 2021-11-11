@@ -2,31 +2,14 @@ import React, { useState } from "react";
 import type { FC } from "react";
 import { Button, Card, Modal, Spinner } from "react-bootstrap";
 import "./Movies.css";
+import type { Movie } from "../../models/movie";
 
 interface MovieProps {
 	errorMessage: string;
-	handleAddNomination: (movie: {
-		Poster: string;
-		Title: string;
-		Type: string;
-		Year: string;
-		imdbID: string;
-	}) => void;
+	handleAddNomination: (movie: Movie) => void;
 	isLoading: boolean;
-	movieList: {
-		Poster: string;
-		Title: string;
-		Type: string;
-		Year: string;
-		imdbID: string;
-	}[];
-	nominations: {
-		Poster: string;
-		Title: string;
-		Type: string;
-		Year: string;
-		imdbID: string;
-	}[];
+	movieList: Movie[];
+	nominations: Movie[];
 }
 
 const Movies: FC<MovieProps> = ({
@@ -42,7 +25,7 @@ const Movies: FC<MovieProps> = ({
 	const handleOpenModal = () => setShowModal(true);
 
 	return (
-		<div className="movies" data-testid="movies">
+		<div className="movies">
 			<h4 className="movie-banner">Movie Search Results</h4>
 			<div className="movielist">
 				{isLoading ? (
